@@ -89,6 +89,22 @@ def greeting():
 
 
 
+
+def play_music():
+    music_dir = "D:\\Bappy\\Live Sessions\\Inception\\FSDS-with-GenAI-1.0\\Python-Programming\\JARVIS-Voice-Assistant-System\\music"   # <-- change this to your music folder
+    try:
+        songs = os.listdir(music_dir)
+        if songs:
+            random_song = random.choice(songs)
+            speak(f"Playing a random song sir: {random_song}")
+            os.startfile(os.path.join(music_dir, random_song))
+            logging.info(f"Playing music: {random_song}")
+        else:
+            speak("No music files found in your music directory.")
+    except Exception:
+        speak("Sorry sir, I could not find your music folder.")
+
+
 greeting()
 
 while True:
@@ -108,19 +124,96 @@ while True:
     # Small talk
     elif "how are you" in query:
         speak("I am functioning at full capacity sir!")
+        logging.info("User asked about assistant's well-being.")
 
     
     elif "who made you" in query:
         speak("I was created by Bappy sir, a brilliant mind!")
+        logging.info("User asked about assistant's creator.")
 
     
     elif "thank you" in query:
         speak("It's my pleasure sir. Always happy to help.")
+        logging.info("User expressed gratitude.")
 
     
     elif "open google" in query:
         speak("ok sir. please type here what do you want to read")
         webbrowser.open("google.com")
+        logging.info("User requested to open Google.")
+
+    
+    # Calculator
+    elif "open calculator" in query or "calculator" in query:
+        speak("Opening calculator")
+        subprocess.Popen("calc.exe")
+        logging.info("User requested to open Calculator.")
+
+    
+     # Notepad
+    elif "open notepad" in query:
+        speak("Opening Notepad")
+        subprocess.Popen("notepad.exe")
+        logging.info("User requested to open Notepad.")
+
+    
+    # Command Prompt
+    elif "open terminal" in query or "open cmd" in query:
+        speak("Opening Command Prompt terminal")
+        subprocess.Popen("cmd.exe")
+        logging.info("User requested to open Command Prompt.")
+
+    
+    # Calendar
+    elif "open calendar" in query or "calendar" in query:
+        speak("Opening Windows Calendar")
+        webbrowser.open("https://calendar.google.com")
+        logging.info("User requested to open Calendar.")
+
+    
+    # YouTube search
+    elif "youtube" in query:
+        speak("Opening YouTube for you.")
+        query = query.replace("youtube", "")
+        webbrowser.open(f"https://www.youtube.com/results?search_query={query}")
+        logging.info("User requested to search on YouTube.")
+
+    
+    elif "open facebook" in query:
+        speak("ok sir. opening facebook")
+        webbrowser.open("facebook.com")
+        logging.info("User requested to open Facebook.")
+
+    
+    elif "open github" in query:
+        speak("ok sir. opening github")
+        webbrowser.open("github.com")
+        logging.info("User requested to open GitHub.")
+
+
+    
+    # Jokes
+    elif "joke" in query:
+        jokes = [
+            "Why don't programmers like nature? Too many bugs.",
+            "I told my computer I needed a break. It said no problem, it will go to sleep.",
+            "Why do Java developers wear glasses? Because they don't C sharp."
+        ]
+        speak(random.choice(jokes))
+        logging.info("User requested a joke.")
+
+    
+    elif "wikipedia" in query:
+        speak("Searching Wikipedia...")
+        query = query.replace("wikipedia", "")
+        results = wikipedia.summary(query, sentences=2)
+        speak("According to Wikipedia")
+        speak(results)
+        logging.info("User requested information from Wikipedia.")
+
+    
+    elif "play music" in query or "music" in query:
+        play_music()
 
 
     elif "exit" in query:
